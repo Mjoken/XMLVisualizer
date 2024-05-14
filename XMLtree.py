@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import networkx as nx
-
+import math
 
 class XMLNode:
     def __init__(self, tag, attributes=None, text=None, depth=0):
@@ -31,6 +31,7 @@ class XMLNode:
 class XMLTree:
     def __init__(self):
         self.root = None
+        self.plt = None
 
     # DFS add root
     def depth_add_node(self, node: XMLNode, curnode: XMLNode = None):
@@ -79,7 +80,7 @@ class XMLTree:
 
         def add_nodes_edges(node):
             attributes_str = '\n'.join([f"{key}={value}" for key, value in node.attributes.items()])
-            label = f"{node.tag}\n Attributes:\n {attributes_str}"
+            label = f"{node.tag}\n Attributes:\n {attributes_str} \n Text: {node.text}\n"
             G.add_node(node.tag, label=label)
             for child in node.children:
                 G.add_edge(node.tag, child.tag)
@@ -87,15 +88,16 @@ class XMLTree:
 
         add_nodes_edges(self.root)
         return G
-
+    def get_plt(self):
+        return self.plt
     # This function do things:)
     # We convert our tree to networkx graph and use layout
     def draw_tree(self):
         G = self.to_networkx()
         pos = nx.drawing.nx_agraph.graphviz_layout(G, prog="dot", root=self.root.tag)
         labels = nx.get_node_attributes(G, 'label')  # Получаем метки узлов
-        max_label_length = max(len(label) for label in labels.values()) if labels else 0
-        node_sizes = [len(label) * 100 + max_label_length * 30 for label in labels.values()]
+        node_sizes = [len(label) * 250 for label in labels.values()]
         nx.draw(G, pos, with_labels=True, node_size=node_sizes, node_color='skyblue', font_size=8, font_weight='bold',
                 labels=labels, node_shape="s", linewidths=2, edge_color="gray", width=1.5, arrowsize=10)
+        self.plt = plt
         plt.show()
