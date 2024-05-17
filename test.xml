@@ -14,6 +14,8 @@
     <City>Old Town</City>
     <State>PA</State>
     <Zip>95819</Zip>
+      <City1>Old Town</City1>
+      <State2>PA</State2>
     <Country>USA</Country>
   </Address>
   <DeliveryNotes>Please leave packages in shed by driveway.</DeliveryNotes>

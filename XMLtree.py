@@ -80,7 +80,7 @@ class XMLTree:
 
         def add_nodes_edges(node):
             attributes_str = '\n'.join([f"{key}={value}" for key, value in node.attributes.items()])
-            label = f"{node.tag}\n Attributes:\n {attributes_str} \n Text: {node.text}\n"
+            label = f"{node.tag}\n Attributes:\n {attributes_str} \n Text:\n {node.text}\n"
             G.add_node(node.tag, label=label)
             for child in node.children:
                 G.add_edge(node.tag, child.tag)
